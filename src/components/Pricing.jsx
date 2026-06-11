@@ -1,90 +1,128 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Tag } from 'lucide-react';
+import { Check, Phone } from 'lucide-react';
 
 const Pricing = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const servicePrices = [
     {
       name: 'الشبوك',
-      price: '45 ريال',
-      unit: 'للمتر الطولي',
-      description: 'تركيب شبوك مجلفنة عالية الجودة للمزارع والمنشآت.',
+      price: '45',
+      unit: 'ريال / للمتر الطولي',
+      description: 'شبوك مجلفنة عالية الجودة للمزارع والمنشآت.',
+      features: ['شبوك أمنية وزراعية', 'مجلفن مقاوم للصدأ', 'تركيب احترافي', 'ضمان على العمل'],
+      accent: '#17382f',
+      bg: '#f0f7f3',
     },
     {
       name: 'المظلات',
-      price: '90 ريال',
-      unit: 'للمتر المربع',
-      description: 'مظلات قماش PVC كوري عازلة للحرارة مع ضمان 10 سنوات.',
+      price: '90',
+      unit: 'ريال / للمتر المربع',
+      description: 'مظلات PVC كوري عازلة للحرارة مع ضمان 10 سنوات.',
+      features: ['قماش PVC كوري', 'ضمان 10 سنوات', 'تصاميم متعددة', 'تركيب سريع'],
+      accent: '#1a3a5c',
+      bg: '#f0f4f9',
+      featured: true,
     },
     {
       name: 'الحدادة',
-      price: '250 ريال',
-      unit: 'للمتر المربع',
+      price: '250',
+      unit: 'ريال / للمتر المربع',
       description: 'أبواب وشبابيك بتصاميم فنية مخصصة من حديد مشغول.',
+      features: ['تصاميم مخصصة', 'حديد مشغول عالي الجودة', 'دهان بودرة', 'صيانة مجانية'],
+      accent: '#3d1f00',
+      bg: '#fdf6f0',
     },
     {
       name: 'المستودعات',
-      price: '150 ريال',
-      unit: 'للمتر المربع',
-      description: 'بناء هناجر ومستودعات معتمدة بنظام تسليم مفتاح.',
+      price: '150',
+      unit: 'ريال / للمتر المربع',
+      description: 'هناجر ومستودعات معتمدة بنظام تسليم مفتاح.',
+      features: ['تصميم هندسي', 'عزل حراري ومائي', 'تسليم مفتاح', 'ضمان الهيكل'],
+      accent: '#2d1f3d',
+      bg: '#f8f4fc',
     },
   ];
 
   return (
-    <section id="pricing" ref={ref} className="py-16 md:py-20 bg-gray-50">
+    <section id="pricing" ref={ref} className="py-20 md:py-28 bg-white">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-16"
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-[#17382f] mb-4">أسعارنا التنافسية</h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            نقدم أسعارًا واضحة ومنافسة تبدأ من:
+          <span className="mb-4 inline-block rounded-full bg-[#17382f]/10 px-5 py-2 text-sm font-extrabold text-[#17382f]">
+            الأسعار
+          </span>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#17382f] mb-4">أسعار شفافة وتنافسية</h2>
+          <p className="text-lg text-gray-600 max-w-xl mx-auto">
+            أسعار واضحة تبدأ من — للحصول على عرض دقيق يرجى التواصل معنا
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {servicePrices.map((service, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {servicePrices.map((s, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow-lg p-6 text-center transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col"
+              className={`relative rounded-2xl overflow-hidden border-2 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${
+                s.featured ? 'border-[#1a3a5c] shadow-xl' : 'border-gray-100 shadow-sm'
+              }`}
             >
-              <div className="flex-grow">
-                <Tag className="mx-auto text-[#17382f] mb-4" size={40} />
-                <h3 className="text-2xl font-bold text-[#17382f] mb-3">{service.name}</h3>
-                <p className="text-gray-500 mb-4">{service.description}</p>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-4 mt-auto">
-                <p className="text-gray-600 text-sm">تبدأ من</p>
-                <p className="text-3xl font-extrabold text-gray-800">{service.price}</p>
-                <p className="text-gray-500 text-sm">{service.unit}</p>
+              {s.featured && (
+                <div className="bg-[#1a3a5c] text-white text-center text-xs font-extrabold py-2 tracking-wider">
+                  الأكثر طلباً
+                </div>
+              )}
+              <div className="p-6" style={{ background: s.bg }}>
+                <h3 className="text-xl font-extrabold mb-1" style={{ color: s.accent }}>{s.name}</h3>
+                <p className="text-gray-500 text-sm mb-5">{s.description}</p>
+
+                <div className="mb-5">
+                  <span className="text-xs text-gray-500">تبدأ من</span>
+                  <div className="flex items-end gap-1 mt-1">
+                    <span className="text-4xl font-extrabold" style={{ color: s.accent }}>{s.price}</span>
+                    <span className="text-sm text-gray-500 mb-1">{s.unit}</span>
+                  </div>
+                </div>
+
+                <ul className="space-y-2 mb-6">
+                  {s.features.map((f, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-gray-700">
+                      <Check size={15} style={{ color: s.accent }} className="flex-shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="tel:0554202751"
+                  className="flex items-center justify-center gap-2 w-full rounded-xl py-3 text-sm font-bold text-white transition hover:opacity-90"
+                  style={{ background: s.accent }}
+                >
+                  <Phone size={16} />
+                  اطلب عرض سعر
+                </a>
               </div>
             </motion.div>
           ))}
         </div>
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-center mt-12"
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="text-center text-gray-500 mt-8 text-sm"
         >
-            <p className="text-gray-600 mb-4">الأسعار قابلة للتغيير بناءً على المواصفات والمساحة. للحصول على عرض سعر دقيق، يرجى التواصل معنا.</p>
-            <a
-              href="tel:0554202751"
-              className="inline-block bg-[#17382f] text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-[#0f2a24] transition-all transform hover:scale-105 shadow-lg"
-            >
-              اطلب عرض سعر الآن
-            </a>
-        </motion.div>
+          * الأسعار تقديرية وتختلف بحسب المواصفات والمساحة والموقع
+        </motion.p>
       </div>
     </section>
   );
